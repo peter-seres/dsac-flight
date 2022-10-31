@@ -1,0 +1,52 @@
+[run]
+save_dir = ".\\training_data\\"
+run_name = "freya-test-new-batch"
+n_episodes = 250
+use_cuda = true
+seed = 0
+
+[agent]
+n_hidden_layers = 2
+n_hidden_units = 64
+lr = 4.4e-4
+gamma = 0.99
+batch_size = 256
+buffer_size = 500_000
+polyak_step_size = 0.995
+update_every = 1
+lambda_t = 400.0
+lambda_s = 400.0
+
+[agent.dsac]
+n_taus = 8
+n_cos = 64
+n_taus_exp = 8     # number of taus used for calculating the expectation
+
+[agent.risk-averse]
+risk_distortion = "wang"
+risk_measure = -0.5
+
+[agent.risk-seeking]
+risk_distortion = "wang"
+risk_measure = 0.5
+
+[training]
+t_max = 30.0
+c = [4, 1, 1]
+loc_penalty = -500
+
+[training.pitch_ref]
+block_width = 10.0
+smooth_width = 6.0
+max_ampl = 20.0
+nr_levels = 15
+vary_timings = 0.1
+start_with_zero = false
+
+[training.roll_ref]
+block_width = 8.0
+smooth_width = 3.0
+max_ampl = 25.0
+nr_levels = 15
+vary_timings = 0.1
+start_with_zero = false
