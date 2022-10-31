@@ -20,19 +20,31 @@ class CitationDynamics:
     defl_low: np.ndarray = np.deg2rad(np.array([-17.0, -19.0, -22.0]))
     defl_high: np.ndarray = np.deg2rad(np.array([15.0, 15.0, 22.0]))
 
+    # Enable slots
+    __slots__ = "t", "x", "u"
+
     def __init__(self):
         # Time tracking
-        self.t: float = 0
+        self.t: float = 0.0
 
         # Current dynamic state [12]
         self.x: Optional[np.ndarray] = None
+
+        # Latest control inputs [3]
+        self.u: Optional[np.ndarray] = None
 
     def initialize(self) -> None:
         # Initialize the compiled model
         citation.initialize()
 
+        # Initialize zero deflections:
+        self.u = np.zeros(3)
+
         # Make a zero input step to retreive the state (citation python model has no internal state)
-        self.x = citation.step(np.zeros(10))
+        self.x = citation.step(cmd=self.pad_control_inputs(deflections=self.u))
+
+        # Reset the time:
+        self.t = 0.0
 
     def step(self, u: np.ndarray) -> (np.ndarray, np.ndarray):
         """Applies control input u [size 3] to the dynamic model, with deflection saturation.
@@ -41,7 +53,7 @@ class CitationDynamics:
         """
 
         # Clip the control surfaces to saturation limits:
-        u = u.clip(min=self.defl_low, max=self.defl_high)
+        self.u = u.clip(min=self.defl_low, max=self.defl_high)
 
         # Pad the vector 3 deflections to control inputs of size 10
         control_inputs = self.pad_control_inputs(deflections=u)
