@@ -1,7 +1,7 @@
 [run]
 save_dir = ".\\training_data\\"
-run_name = "freya-test-new-batch"
-n_episodes = 250
+run_name = "test-run"
+n_episodes = 5
 use_cuda = true
 seed = 0
 
@@ -23,7 +23,7 @@ n_cos = 64
 n_taus_exp = 8     # number of taus used for calculating the expectation
 
 [agent.risk-averse]
-risk_distortion = "wang"
+risk_distortion = "wang"    # Options: "wang".
 risk_measure = -0.5
 
 [agent.risk-seeking]

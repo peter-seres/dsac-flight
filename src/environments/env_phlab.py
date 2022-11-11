@@ -134,6 +134,11 @@ class PhlabEnv(CitationDynamics, BaseEnv):
             "ref": self.get_reference(),
         }
 
+    @property
+    def max_samples(self) -> int:
+        """The maximum amount of samples in an episode."""
+        return int(self.t_max / self.dt)
+
     def reset(self, **kwargs) -> (np.ndarray, dict):
         super().initialize()
 
