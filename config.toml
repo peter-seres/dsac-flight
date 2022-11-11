@@ -16,19 +16,11 @@ polyak_step_size = 0.995
 update_every = 1
 lambda_t = 400.0
 lambda_s = 400.0
-
-[agent.dsac]
 n_taus = 8
 n_cos = 64
-n_taus_exp = 8     # number of taus used for calculating the expectation
-
-[agent.risk-averse]
-risk_distortion = "wang"    # Options: "wang".
+n_taus_exp = 8   # number of taus used for calculating the expectation
+risk_distortion = "wang"  # Options: "wang", "", "", ""
 risk_measure = -0.5
-
-[agent.risk-seeking]
-risk_distortion = "wang"
-risk_measure = 0.5
 
 [training]
 t_max = 30.0

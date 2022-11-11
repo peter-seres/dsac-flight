@@ -31,7 +31,7 @@ class PhlabEnv(CitationDynamics, BaseEnv):
         self.config: dict = config
 
         # Maximum episode time
-        self.t_max: float = config["t_max"]
+        self.t_max: float = config["training"]["t_max"]
 
         # Reference signals (initialized during reset())
         self.beta_ref: Optional[Signal] = None
