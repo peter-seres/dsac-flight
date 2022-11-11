@@ -3,15 +3,14 @@ import tqdm
 from agents import BaseAgent
 from environments.env_phlab import PhlabEnv
 from environments.episode_data import EpisodeData
-
-# from data_management.log_manager import LogManager
+from data_management.log_manager import LogManager
 
 
 def train(
     n_episodes: int,
     env: PhlabEnv,
     agent: BaseAgent,
-    # log_manager: LogManager,
+    log_manager: LogManager,
 ):
     """Train the agent through n_episodes."""
 
@@ -33,15 +32,13 @@ def train(
         # Save rewards:
         rewards[i] = total_reward
 
-        # # Log the episode data:
-        # log_manager.log_episode(
-        #     ep_index=i,
-        #     reward=total_reward,
-        #     eta=agent.get_eta(),
-        #     ep_data=ep_data,
-        #     ep_agent=agent,
-        #     wall_clock_time=wall_clock_time,
-        # )
+        # Log the episode data:
+        log_manager.log_episode(
+            ep_index=i,
+            reward=total_reward,
+            ep_data=ep_data,
+            ep_agent=agent,
+        )
 
 
 def train_single_episode(

@@ -14,7 +14,7 @@ class Naming:
 
     CONFIG = "config.toml"  # hyperparameters
     METADATA = "metadata.toml"  # metadata
-    REWARDS = "rewards.npy"  # episodic updates of rewards and adaptive temperature
+    REWARDS = "rewards.json"  # episodic updates of rewards and adaptive temperature
 
     class Episodes:
         FOLDER = "episodes"  # Name of the episodes folder

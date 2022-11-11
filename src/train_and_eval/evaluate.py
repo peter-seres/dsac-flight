@@ -1,18 +1,23 @@
+"""
+This module defines a set of evaluation tasks and an evaluate() function.
+"""
+
 from typing import Dict
 import numpy as np
 from signals import SmoothedStepSequence, Const
-from environments import BaseEnv, BaseEpData, PhlabEnv, PhlabEpData
+from environments.env_phlab import PhlabEnv
 from agents import BaseAgent
+from environments.episode_data import EpisodeData
 
 
-def evaluate(env: PhlabEnv, agent: BaseAgent) -> Dict[str, PhlabEpData]:
+def evaluate(env: PhlabEnv, agent: BaseAgent) -> Dict[str, EpisodeData]:
     return {
         "dally": evaluate_dally(env=env, agent=agent),
         "pitch_up": evaluate_pitch_up(env=env, agent=agent),
     }
 
 
-def evaluate_dally(env: PhlabEnv, agent: BaseAgent) -> PhlabEpData:
+def evaluate_dally(env: PhlabEnv, agent: BaseAgent) -> EpisodeData:
     """Evaluate the PHLAB on a number of reference signal tasks."""
 
     # Time of eval episode
@@ -43,16 +48,10 @@ def evaluate_dally(env: PhlabEnv, agent: BaseAgent) -> PhlabEpData:
     # Set references:
     env.set_references(theta_ref=theta, phi_ref=phi, beta_ref=beta)
 
-    # Make an empty episode data
-    ep_data = PhlabEpData()
-
-    # Pass in the episode data as a reference
-    evaluate_single(env=env, agent=agent, ep_data=ep_data)
-
-    return ep_data
+    return evaluate_single(env=env, agent=agent)
 
 
-def evaluate_pitch_up(env: PhlabEnv, agent: BaseAgent) -> PhlabEpData:
+def evaluate_pitch_up(env: PhlabEnv, agent: BaseAgent) -> EpisodeData:
     """Evaluate the PHLAB on a number of reference signal tasks."""
 
     # Time of eval episode
@@ -76,17 +75,14 @@ def evaluate_pitch_up(env: PhlabEnv, agent: BaseAgent) -> PhlabEpData:
     # Set references:
     env.set_references(theta_ref=theta, phi_ref=phi, beta_ref=beta)
 
-    # Make an empty episode data
-    ep_data = PhlabEpData()
-
-    # Pass in the episode data as a reference
-    evaluate_single(env=env, agent=agent, ep_data=ep_data)
-
-    return ep_data
+    return evaluate_single(env=env, agent=agent)
 
 
-def evaluate_single(env: BaseEnv, agent: BaseAgent, ep_data: BaseEpData) -> BaseEpData:
+def evaluate_single(env: PhlabEnv, agent: BaseAgent) -> EpisodeData:
     """Run a single episode without training and save the time-series to an episode data object."""
+
+    # Make an empty data storage object
+    ep_data = EpisodeData()
 
     # Reset episode. References must be set already!
     state, info = env.reset(is_eval=True)
