@@ -8,12 +8,11 @@ dependencies:
   - cudatoolkit=11.6    # deep learning on gpu
   - tqdm                # progress bars
   - gym                 # gym wrappers
-  - matplotlib          # plotting
   - numpy               # vector and linalg
-  - scipy               # statistics
   - toml                # config files
   - pandas              # managing dataframes and csv saving
   - fsspec              # pandas to csv needs this
+  - gitpython           # to collect metadata of the git hash for logging
   - pip
   - pip:
       - git+https://github.com/peter-seres/signals.git   # reference signal generation
