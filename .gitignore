@@ -1,3 +1,6 @@
+# Data storage
+./training_data/
+
 # IDEs
 .vs/
 .vscode/
