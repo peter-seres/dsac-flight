@@ -1,7 +1,7 @@
 [run]
 save_dir = ".\\training_data\\"
 run_name = "test-run"
-n_episodes = 5
+n_episodes = 50
 use_cuda = true
 seed = 0
 
