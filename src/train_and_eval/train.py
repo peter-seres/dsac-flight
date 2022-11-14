@@ -4,6 +4,7 @@ from agents import BaseAgent
 from environments.env_phlab import PhlabEnv
 from environments.episode_data import EpisodeData
 from data_management.log_manager import LogManager
+from utils import torchify
 
 
 def train(
@@ -50,6 +51,8 @@ def train_single_episode(
     # Reset environment
     state, info = env.reset()
     total_reward = 0
+    info["var"] = np.array([0.0, 0.0])
+    info["reward"] = float(total_reward)
 
     # Initialize an episode data container
     ep_data = EpisodeData()
@@ -76,9 +79,21 @@ def train_single_episode(
         # Step the environment
         next_state, reward, done, info = env.step(action)
 
-        if info.get("nancrash"):
-            print("NAN crash. Breaking episode without agent update")
-            break
+        # Fetch the variances of the critics:
+        try:
+            var_1 = agent.Z1.get_variance(
+                s=torchify(state), a=torchify(action), n_taus=16
+            )
+            var_2 = agent.Z1.get_variance(
+                s=torchify(state), a=torchify(action), n_taus=16
+            )
+        except AttributeError:
+            var_1 = 0.0
+            var_2 = 0.0
+
+        # Store variances
+        info["var"] = np.array([float(var_1), float(var_2)])
+        info["reward"] = reward
 
         # Accumulate reward
         total_reward += reward

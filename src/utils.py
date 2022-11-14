@@ -51,3 +51,8 @@ def str2bool(val: str) -> bool:
         return False
     else:
         raise ValueError(f"Cannot parse invalid bool string value: {val}")
+
+
+def torchify(x: np.ndarray) -> torch.Tensor:
+    """Turn a single dimensional numpy array to a tensor of size [B, N]"""
+    return torch.tensor(x).float().unsqueeze(0)

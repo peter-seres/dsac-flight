@@ -3,7 +3,7 @@ import gym
 import numpy as np
 import copy
 from environments.base_env import BaseEnv
-from src.environments.citation_wrapper import CitationDynamics
+from environments.citation_wrapper import CitationDynamics
 from signals import Signal, Const, RandomizedCosineStepSequence
 
 
@@ -39,7 +39,7 @@ class PhlabEnv(CitationDynamics, BaseEnv):
         self.phi_ref: Optional[Signal] = None
 
         # Reward signal scalar weight
-        c = config["c"]
+        c = config["training"]["c"]
         self.c = np.array(c) * 6 / np.pi
 
     def set_references(

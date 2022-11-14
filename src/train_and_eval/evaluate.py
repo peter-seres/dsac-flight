@@ -96,6 +96,9 @@ def evaluate_single(env: PhlabEnv, agent: BaseAgent) -> EpisodeData:
         # Step the environment
         next_state, reward, done, info = env.step(action)
 
+        info["var"] = np.array([0.0, 0.0])
+        info["reward"] = float(reward)
+
         # Push the data to the episodic data collector
         ep_data.push(info)
 

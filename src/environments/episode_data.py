@@ -41,7 +41,6 @@ class EpisodeData:
         self.rewards.append(info.get("reward"))
 
     def to_pandas(self, convert_to_deg: bool = True) -> pd.DataFrame:
-
         # Conver them into numpy matrices
         t = np.array([self.t]).T
         r = np.array([self.rewards]).T
